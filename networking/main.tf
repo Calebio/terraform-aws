@@ -88,17 +88,17 @@ resource "aws_default_route_table" "fv_private_rt" {
 }
 
 resource "aws_security_group" "fv_sg" {
-  for_each = var.security_groups
+  for_each    = var.security_groups
   name        = each.value.name
   description = each.value.description
   vpc_id      = aws_vpc.full_vpc.id
   dynamic "ingress" {
     for_each = each.value.ingress
     content {
-    from_port   = ingress.value.from
-    to_port     = ingress.value.to
-    protocol    = ingress.value.protocol
-    cidr_blocks = ingress.value.cidr_blocks
+      from_port   = ingress.value.from
+      to_port     = ingress.value.to
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
     }
   }
 
@@ -111,10 +111,10 @@ resource "aws_security_group" "fv_sg" {
 }
 
 resource "aws_db_subnet_group" "fv_rds_subnet_group" {
-    count = var.db_subnet_group == true ? 1 : 0 
-    name = "fv_rds_subnet_group"
-    subnet_ids = aws_subnet.fv_private_subnet.*.id
-    tags = {
-        Name = "fv_rds_sng"
-    }
+  count      = var.db_subnet_group == true ? 1 : 0
+  name       = "fv_rds_subnet_group"
+  subnet_ids = aws_subnet.fv_private_subnet.*.id
+  tags = {
+    Name = "fv_rds_sng"
+  }
 }

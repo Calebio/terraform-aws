@@ -23,16 +23,16 @@ locals {
       }
     }
     rds = {
-        name = "RDS_sg"
-        description = "RDS private access security group"
-        ingress = {
-            mysql = {
-                from = 3306
-                to = 3306
-                protocol = "tcp"
-                cidr_blocks = [local.vpc_cidr]
-            }
+      name        = "RDS_sg"
+      description = "RDS private access security group"
+      ingress = {
+        mysql = {
+          from        = 3306
+          to          = 3306
+          protocol    = "tcp"
+          cidr_blocks = [local.vpc_cidr]
         }
+      }
     }
   }
 }
