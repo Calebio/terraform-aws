@@ -20,3 +20,11 @@ resource "aws_lb_target_group" "fv_tg" {
 }
 ```
 For the name line, substr and uuid adds random strings to the name but the downside that everytime you run a terraform apply to the name is changed automatically and that can affect every instance in this target group so the solution here is to add the l`ifecycle` block and use the `ignore_changes` to specify what change should be ignored.
+
+- Create an ssh key with `ssh-keygen -t rsa` the key type is rsa
+
+- cause of error?
+- Possible solutions
+  - `terraform plan -lock=false`
+  - `terraform force-unlock -force <ID from the error message>`
+  

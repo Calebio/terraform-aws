@@ -13,31 +13,47 @@ module "networking" {
   db_subnet_group  = true
 }
 
-# module "database" {
-#   source                 = "./database"
-#   db_storage             = 10 # this is gaby byte
-#   db_engine_version      = "5.7.40"
-#   db_instance_class      = "db.t2.micro"
-#   dbname                 = var.dbname
-#   dbuser                 = var.dbuser
-#   dbpass                 = var.dbpass
-#   db_identifier          = "fv-db"
-#   skip_final_snapshot    = true
-#   db_subnet_group_name   = module.networking.db_subnet_group_name[0]
-#   vpc_security_group_ids = module.networking.db_security_group
-# }
+module "database" {
+  source                 = "./database"
+  db_storage             = 10 # this is gaby byte
+  db_engine_version      = "5.7.40"
+  db_instance_class      = "db.t2.micro"
+  dbname                 = var.dbname
+  dbuser                 = var.dbuser
+  dbpass                 = var.dbpass
+  db_identifier          = "fv-db"
+  skip_final_snapshot    = true
+  db_subnet_group_name   = module.networking.db_subnet_group_name[0]
+  vpc_security_group_ids = module.networking.db_security_group
+}
 
 module "loadbalancing" {
   source                 = "./loadbalancing"
   public_sg              = module.networking.public_sg
   public_subnets         = module.networking.public_subnets
-  tg_port                = 8000
+  tg_port                = 80
   tg_protocol            = "HTTP"
   vpc_id                 = module.networking.vpc_id
   lb_healthy_threshold   = 2
   lb_unhealthy_threshold = 2
   lb_timeout             = 3
   lb_interval            = 30
-  listener_port          = 8000
+  listener_port          = 80
   listener_protocol      = "HTTP"
+}
+
+module "compute" {
+  source          = "./compute"
+  instance_count  = 1
+  instance_type   = "t3.micro"
+  public_sg       = module.networking.public_sg
+  public_subnets  = module.networking.public_subnets
+  vol_size        = 10
+  key_name        = "fvkey"
+  public_key_path = "/root/.ssh/keyfv.pub"
+  dbname          = var.dbname
+  dbuser          = var.dbuser
+  dbpass          = var.dbpass
+  db_endpoint     = module.database.db_endpoint
+  user_data_path  = "${path.root}/userdata.tpl"
 }
