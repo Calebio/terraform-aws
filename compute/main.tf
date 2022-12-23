@@ -56,5 +56,5 @@ resource "aws_lb_target_group_attachment" "fv_tg_attach"{
   count = var.instance_count
   target_group_arn = var.lb_target_group_arn
   target_id = aws_instance.fv_node[count.index].id
-  port = 8000
+  port = var.tg_port
 }

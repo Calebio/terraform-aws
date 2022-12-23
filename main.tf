@@ -54,6 +54,7 @@ module "compute" {
   dbname          = var.dbname
   dbuser          = var.dbuser
   dbpass          = var.dbpass
+  tg_port = 8000
   db_endpoint     = module.database.db_endpoint
   user_data_path  = "${path.root}/userdata.tpl"
   lb_target_group_arn = module.loadbalancing.lb_target_group_arn
