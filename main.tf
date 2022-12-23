@@ -44,7 +44,7 @@ module "loadbalancing" {
 
 module "compute" {
   source          = "./compute"
-  instance_count  = 1
+  instance_count  = 2
   instance_type   = "t3.micro"
   public_sg       = module.networking.public_sg
   public_subnets  = module.networking.public_subnets
@@ -56,4 +56,5 @@ module "compute" {
   dbpass          = var.dbpass
   db_endpoint     = module.database.db_endpoint
   user_data_path  = "${path.root}/userdata.tpl"
+  lb_target_group_arn = module.loadbalancing.lb_target_group_arn
 }

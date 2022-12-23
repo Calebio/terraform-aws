@@ -39,7 +39,7 @@ vpc_security_group_ids = [var.public_sg]
 subnet_id = var.public_subnets[count.index]
 user_data = templatefile(var.user_data_path,
     {
-      nodename    = "${random_id.fv_node_id[count.index].dec}"
+      nodename    = "fv-${random_id.fv_node_id[count.index].dec}"
       db_endpoint = var.db_endpoint
       dbuser      = var.dbuser
       dbpass      = var.dbpass
@@ -50,4 +50,11 @@ user_data = templatefile(var.user_data_path,
 root_block_device {
     volume_size = var.vol_size  #10
     }
+}
+
+resource "aws_lb_target_group_attachment" "fv_tg_attach"{
+  count = var.instance_count
+  target_group_arn = var.lb_target_group_arn
+  target_id = aws_instance.fv_node[count.index].id
+  port = 8000
 }
