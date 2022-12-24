@@ -13,8 +13,8 @@ resource "aws_lb_target_group" "fv_tg" {
   protocol = var.tg_protocol
   vpc_id   = var.vpc_id
   lifecycle {
-    ignore_changes = [name]
-    create_before_destroy = true 
+    ignore_changes        = [name]
+    create_before_destroy = true
   }
   health_check {
     healthy_threshold   = var.lb_healthy_threshold

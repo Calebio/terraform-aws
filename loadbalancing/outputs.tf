@@ -4,6 +4,6 @@ output "lb_target_group_arn" {
   description = "load balancer arn"
 }
 
-output "lb_endpoint"{
-    value = aws_lb.fv_lb.dns_name
+output "lb_endpoint" {
+  value = aws_lb.fv_lb.dns_name
 }

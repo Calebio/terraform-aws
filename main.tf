@@ -43,19 +43,20 @@ module "loadbalancing" {
 }
 
 module "compute" {
-  source          = "./compute"
-  instance_count  = 2
-  instance_type   = "t3.micro"
-  public_sg       = module.networking.public_sg
-  public_subnets  = module.networking.public_subnets
-  vol_size        = 10
-  key_name        = "fvkey"
-  public_key_path = "/root/.ssh/keyfv.pub"
-  dbname          = var.dbname
-  dbuser          = var.dbuser
-  dbpass          = var.dbpass
-  tg_port = 8000
-  db_endpoint     = module.database.db_endpoint
-  user_data_path  = "${path.root}/userdata.tpl"
+  source              = "./compute"
+  instance_count      = 1
+  instance_type       = "t3.micro"
+  public_sg           = module.networking.public_sg
+  public_subnets      = module.networking.public_subnets
+  vol_size            = 10
+  key_name            = "fvkey"
+  public_key_path     = "/root/.ssh/keyfv.pub"
+  dbname              = var.dbname
+  dbuser              = var.dbuser
+  dbpass              = var.dbpass
+  tg_port             = 8000
+  db_endpoint         = module.database.db_endpoint
+  user_data_path      = "${path.root}/userdata.tpl"
   lb_target_group_arn = module.loadbalancing.lb_target_group_arn
+  private_key_path    = "/root/.ssh/keyfv"
 }
