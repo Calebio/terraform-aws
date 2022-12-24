@@ -36,7 +36,7 @@ In my case : `ssh -i ~/.ssh/keyfv ubuntu@54.201.221.70`
 ## Nginx deploy and test
 Afer deploying the k3 and ssh into the instance, below are the steps to set up the Nginx.
 Check for the nodes and pods with the command `kubectl get pods` and `kubectl get nodes`
-- First run the `vim deployment.yml` and paste the deployment script in the deplyment yml file and then save and exit. 
+- First run the `vim deployment.yml`, use the `:set paste` below to allow you paste your yaml config and then paste the deployment script in the deplyment yml file and then save and exit. 
 - Second, apply the configurations in the yml file you just added `kubectl apply -f deployment.yml` and the check the nodes and pods again to be sure of your deployments
 
 - Third, Test your nginx servers. Go to your browser, Use the public ip address from any of the instances just created and try to access the nginx serve on port 8000 eg `35.89.90.146:8000`
