@@ -45,3 +45,8 @@ Check for the nodes and pods with the command `kubectl get pods` and `kubectl ge
 
 after adding the ec2 instances to a target group and deployment is successful, we try to test by using the load balancer dns name to and the port of with the target group is listening on e.g my listener is listening on port 80 so the web address looks like this. `fv-loadbalancer-636613368.us-west-2.elb.amazonaws.com:80` 
 
+## How to see the sensitive outputs.
+- We used jq to show outputs from out deployment and in this case, to see the sensitive values of an output.
+syntax: `terraform output -json | jq '."<output name>"."value"'` <br/>
+In my case `terraform output -json | jq '."load_balancer_endpoint"."value"'`
+
