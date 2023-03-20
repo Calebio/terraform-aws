@@ -1,7 +1,7 @@
 # --- database/main.tf ---
 
 resource "aws_db_instance" "fv_db" {
-  allocated_storage      = var.db_storage #create variable
+  allocated_storage      = var.db_storage 
   engine                 = "mysql"
   engine_version         = var.db_engine_version
   instance_class         = var.db_instance_class

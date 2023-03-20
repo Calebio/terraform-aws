@@ -9,15 +9,15 @@ output "load_balancer_endpoint" {
 # }
 output "instances" {
   value     = { for i in module.compute.instance : i.tags.Name => "${i.public_ip}:${module.compute.instance_port}" }
-  sensitive = true
+  sensitive = false
 }
 
 output "kubeconfig" {
   value     = [for i in module.compute.instance : "export KUBECONFIG=../k3s-${i.tags.Name}.yaml"]
-  sensitive = true
+  sensitive = false
 }
 
 output "k3s" {
   value     = [for i in module.compute.instance : "../k3s-${i.tags.Name}.yaml"][0]
-  sensitive = true
+  sensitive = false
 }

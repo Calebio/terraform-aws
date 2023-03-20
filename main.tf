@@ -8,8 +8,8 @@ module "networking" {
   public_sn_count  = 2
   private_sn_count = 3
   max_subnets      = 20
-  public_cidrs     = [for i in range(2, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)] //["10.100.2.0/24", "10.100.4.0/24"]
-  private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
+  public_cidrs     = [for i in range(2, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)] // the 8 adds to the cidrblock and increases by i in range
+  private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)] // Odd numbers
   db_subnet_group  = true
 }
 
@@ -44,7 +44,7 @@ module "loadbalancing" {
 
 module "compute" {
   source              = "./compute"
-  instance_count      = 1
+  instance_count      = 2
   instance_type       = "t3.micro"
   public_sg           = module.networking.public_sg
   public_subnets      = module.networking.public_subnets
