@@ -1,5 +1,12 @@
 ## Here I write about things that caught my interest or things I should remember
 
+```
+[for i in range(2, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)] 
+[for i in range(1, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
+```
+`range(2(min_num), 255(max_num))`
+`cidrsubnet(local.vpc_cidr, 8, i)` 8 is added to the cidrblock in the `vpc_cidr` variable then the ip address is increased by the number produces by the i of the range function
+
 The resource block below will be explained
 
 ``` 
